@@ -1,0 +1,39 @@
+//Java GetData From FirebaseFirestore
+
+	  FirebaseFirestore db;
+	  db=FirebaseFirestore.getInstance();
+
+        DocumentReference document = db.collection("shayari").document("latest");
+        document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+                    binding.latest.setText(documentSnapshot.getString("shayari"));
+                }else {
+                    Toast.makeText(MainActivity.this, "data Note Found...", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+            }
+        });
+		
+		
+		
+//Kotlin
+
+		var db: FirebaseFirestore? = null
+        db = FirebaseFirestore.getInstance()
+
+        val document: DocumentReference = db!!.collection("shayari").document("latest")
+        document.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                binding.latest.setText(documentSnapshot.getString("shayari"))
+            } else {
+                Toast.makeText(this, "data Note Found...", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Something Went Wrong...",Toast.LENGTH_SHORT).show()
+        }
